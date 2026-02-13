@@ -1,0 +1,93 @@
+<div class="signup-container">
+  <div class="signup-card">
+    <div class="signup-header">
+      <h2>Create Account</h2>
+      <p>Sign up for a new account</p>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input 
+          type="text" 
+          id="name"
+          formControlName="name" 
+          class="form-control"
+          [class.is-invalid]="f['name'].invalid && f['name'].touched"
+          placeholder="Enter your full name"
+        />
+        <div class="invalid-feedback" *ngIf="f['name'].invalid && f['name'].touched">
+          <span *ngIf="f['name'].errors?.['required']">Name is required</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email"
+          formControlName="email" 
+          class="form-control"
+          [class.is-invalid]="f['email'].invalid && f['email'].touched"
+          placeholder="Enter your email"
+        />
+        <div class="invalid-feedback" *ngIf="f['email'].invalid && f['email'].touched">
+          <span *ngIf="f['email'].errors?.['required']">Email is required</span>
+          <span *ngIf="f['email'].errors?.['email']">Please enter a valid email</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input-wrapper">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password"
+            formControlName="password" 
+            class="form-control"
+            [class.is-invalid]="f['password'].invalid && f['password'].touched"
+            placeholder="Enter your password"
+          />
+          <button 
+            type="button" 
+            class="password-toggle-btn"
+            (click)="togglePasswordVisibility()"
+            tabindex="-1"
+          >
+            <span *ngIf="!showPassword">👁️</span>
+            <span *ngIf="showPassword">👁️‍🗨️</span>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="f['password'].invalid && f['password'].touched">
+          <span *ngIf="f['password'].errors?.['required']">Password is required</span>
+          <span *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Account Type</label>
+        <select 
+          id="role"
+          formControlName="role" 
+          class="form-control"
+        >
+          <option value="user">Regular User</option>
+          <option value="admin">Administrator</option>
+        </select>
+      </div>
+
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="loading">
+        <span *ngIf="loading">Creating account...</span>
+        <span *ngIf="!loading">Sign Up</span>
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a routerLink="/login">Login here</a>
+    </div>
+  </div>
+</div>
